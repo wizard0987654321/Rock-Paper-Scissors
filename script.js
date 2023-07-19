@@ -1,8 +1,4 @@
-
-let ties = 0;
-let computerScore = 0;
-let playerScore = 0;
-
+// Function, that randomly gives us computer choice of game
 function getComputerChoice() {
 
     const options = ["Rock", "Paper", "Scissors"];
@@ -12,6 +8,7 @@ function getComputerChoice() {
     return choice;
 }
 
+// Function, that gets the user choice for game
 function getPlayerChoice() {
 
     let choice = prompt("Chosse between Rock, Paper and Scissors");
@@ -22,6 +19,7 @@ function getPlayerChoice() {
     || choice === "Scissors" ? choice: "Invalid Choice"
 }
 
+// Capitalizing first letter of user input
 function capitalize(word) {
 
     let firstLetter = word.charAt(0);
@@ -31,6 +29,12 @@ function capitalize(word) {
 
     return result;
 }
+
+/* Passing two arguments, player's choice and 
+computer's choice to the function, that simulates
+one round of the game and returns the relevant 
+text message in the console
+*/
 
 function round(playerSelection, computerSelection) {
     
@@ -65,6 +69,11 @@ function round(playerSelection, computerSelection) {
     }
 }
 
+/* Executing full game, that consists 5 rounds 
+of the game and keeping track of ties, computer wins
+and user wins
+*/
+
 function game() {
     let ties = 0;
     let computerScore = 0;
@@ -87,6 +96,7 @@ function game() {
     console.log(ties, computerScore, playerScore);
 }
 
+// Calling the game function
 game();
 
 
