@@ -100,3 +100,4 @@ function game() {
 game();
 
 
+console.log("checking branching");
