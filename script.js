@@ -8,28 +8,6 @@ function getComputerChoice() {
     return choice;
 }
 
-// Function, that gets the user choice for game
-function getPlayerChoice() {
-
-    let choice = prompt("Chosse between Rock, Paper and Scissors");
-    choice = choice.toLowerCase();
-    choice = capitalize(choice);
-
-    return choice === "Rock" || choice === "Paper"
-    || choice === "Scissors" ? choice: "Invalid Choice"
-}
-
-// Capitalizing first letter of user input
-function capitalize(word) {
-
-    let firstLetter = word.charAt(0);
-    firstLetter = firstLetter.toUpperCase();
-    const restWord = word.slice(1);
-    const result = firstLetter.concat(restWord);
-
-    return result;
-}
-
 /* Passing two arguments, player's choice and 
 computer's choice to the function, that simulates
 one round of the game and returns the relevant 
@@ -74,30 +52,44 @@ of the game and keeping track of ties, computer wins
 and user wins
 */
 
-function game() {
+function game(playerchoice) {
     let ties = 0;
     let computerScore = 0;
     let playerScore = 0;
 
-    for (let i = 0; i < 5; i++) {
-        const computerChoice = getComputerChoice();
-        const playerChoice = getPlayerChoice();
-        const result = (round(playerChoice, computerChoice));
-        if (result[4] === "w") {
-            playerScore++;
-        } else if (result[6] === "s") {
-            computerScore++;
-        } else if (result[3] === "d") {
-            ties++;
-        } 
-        console.log(result);
-    }
+    const computerChoice = getComputerChoice();
+    const playerChoice = playerchoice;
+    const result = (round(playerChoice, computerChoice));
+    if (result[4] === "w") {
+        playerScore++;
+    } else if (result[6] === "s") {
+        computerScore++;
+    } else if (result[3] === "d") {
+        ties++;
+    } 
+    console.log(result);
 
     console.log(ties, computerScore, playerScore);
 }
 
-// Calling the game function
-game();
+// Saving all buttons in a variable
+const choices = document.querySelectorAll("button");
 
+/* Iterating through the node list of buttons
+and calling a startGame funcion for each one, if
+button is clicked */
 
-console.log("checking branching");
+choices.forEach(choice => {
+    choice.addEventListener('click', startGame);
+});
+
+/* Getting the class of chosen button and passing it
+to the game function, which simulates one round of 
+Rock-Paper-Scissors game */
+
+function startGame(e) {
+    const chosenOption = e.target;
+    const optionClass = chosenOption.classList[0];
+    game(optionClass);
+}
+
