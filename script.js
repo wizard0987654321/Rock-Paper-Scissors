@@ -1,3 +1,9 @@
+    
+// Global variables in order to keep track of score
+let ties = 0;
+let computerScore = 0;
+let playerScore = 0;
+
 // Function, that randomly gives us computer choice of game
 function getComputerChoice() {
 
@@ -53,9 +59,6 @@ and user wins
 */
 
 function game(playerchoice) {
-    let ties = 0;
-    let computerScore = 0;
-    let playerScore = 0;
 
     const computerChoice = getComputerChoice();
     const playerChoice = playerchoice;
@@ -67,9 +70,15 @@ function game(playerchoice) {
     } else if (result[3] === "d") {
         ties++;
     } 
-    console.log(result);
+    const resultPara = document.querySelector(".presult");
+    resultPara.textContent = result;
 
-    console.log(ties, computerScore, playerScore);
+    const scorePara = document.querySelector(".pscore");
+
+    scorePara.textContent = (playerScore > 4) ? "You won! Computer is beaten":
+    (ties > 4) ? "Tied Game, Friendship wins!":
+    (computerScore > 4) ? "You lost, Computer beat you":
+    `${playerScore} ${ties} ${computerScore}`;
 }
 
 // Saving all buttons in a variable

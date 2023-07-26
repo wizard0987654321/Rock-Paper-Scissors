@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2.5rem;
+}
+
+.results {
+    display: flex;
+}
+
+h1 {
+    padding: 1rem;
+}
+
+button {
+    margin: 1rem;
+}
