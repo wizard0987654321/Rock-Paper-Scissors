@@ -1,104 +1,77 @@
-    
-// Global variables in order to keep track of score
-let ties = 0;
-let computerScore = 0;
-let playerScore = 0;
-
-// Function, that randomly gives us computer choice of game
+// Global variables to keep track of the score
+var ties = 0;
+var computerScore = 0;
+var playerScore = 0;
+// Function to randomly select the computer's choice
 function getComputerChoice() {
-
-    const options = ["Rock", "Paper", "Scissors"];
-    const randomInt = Math.floor(Math.random() * 3);
-    const choice = options[randomInt];
-    
-    return choice;
+    var options = ["Rock", "Paper", "Scissors"];
+    var randomInt = Math.floor(Math.random() * 3);
+    return options[randomInt];
 }
-
-/* Passing two arguments, player's choice and 
-computer's choice to the function, that simulates
-one round of the game and returns the relevant 
-text message in the console
-*/
-
+// Function that simulates one round of the game
 function round(playerSelection, computerSelection) {
-    
     if (computerSelection === "Rock") {
-        return playerSelection === "Rock" ? 
-        "Tied game":
-        playerSelection === "Paper" ? 
-        `You won! ${playerSelection} beats ${computerSelection}`:
-        playerSelection === "Scissors" ?
-        `You lost! ${computerSelection} beats ${playerSelection}`:
-        "Invalid Selection! Please try again"
-    } 
-
+        if (playerSelection === "Rock")
+            return "Tied game";
+        if (playerSelection === "Paper")
+            return "You won! ".concat(playerSelection, " beats ").concat(computerSelection);
+        if (playerSelection === "Scissors")
+            return "You lost! ".concat(computerSelection, " beats ").concat(playerSelection);
+    }
     else if (computerSelection === "Scissors") {
-        return playerSelection === "Rock" ? 
-        `You won! ${playerSelection} beats ${computerSelection}`:
-        playerSelection === "Paper" ? 
-        `You lost! ${computerSelection} beats ${playerSelection}`:
-        playerSelection === "Scissors" ?
-        "Tied game":
-        "Invalid Selection! Please try again"
+        if (playerSelection === "Rock")
+            return "You won! ".concat(playerSelection, " beats ").concat(computerSelection);
+        if (playerSelection === "Paper")
+            return "You lost! ".concat(computerSelection, " beats ").concat(playerSelection);
+        if (playerSelection === "Scissors")
+            return "Tied game";
     }
-
     else if (computerSelection === "Paper") {
-        return playerSelection === "Rock" ? 
-        `You lost! ${computerSelection} beats ${playerSelection}`:
-        playerSelection === "Paper" ? 
-        "Tied game":
-        playerSelection === "Scissors" ?
-        `You won! ${playerSelection} beats ${computerSelection}`:
-        "Invalid Selection! Please try again"
+        if (playerSelection === "Rock")
+            return "You lost! ".concat(computerSelection, " beats ").concat(playerSelection);
+        if (playerSelection === "Paper")
+            return "Tied game";
+        if (playerSelection === "Scissors")
+            return "You won! ".concat(playerSelection, " beats ").concat(computerSelection);
     }
+    return "Invalid Selection! Please try again";
 }
-
-/* Executing full game, that consists 5 rounds 
-of the game and keeping track of ties, computer wins
-and user wins
-*/
-
+// Function that handles the full game logic
 function game(playerchoice) {
-
-    const computerChoice = getComputerChoice();
-    const playerChoice = playerchoice;
-    const result = (round(playerChoice, computerChoice));
-    if (result[4] === "w") {
+    var computerChoice = getComputerChoice();
+    var result = round(playerchoice, computerChoice);
+    // Update scores based on the result
+    if (result.includes("won")) {
         playerScore++;
-    } else if (result[6] === "s") {
+    }
+    else if (result.includes("lost")) {
         computerScore++;
-    } else if (result[3] === "d") {
+    }
+    else if (result.includes("Tied")) {
         ties++;
-    } 
-    const resultPara = document.querySelector(".presult");
+    }
+    // Update the result on the page
+    var resultPara = document.querySelector(".presult");
     resultPara.textContent = result;
-
-    const scorePara = document.querySelector(".pscore");
-
-    scorePara.textContent = (playerScore > 4) ? "You won! Computer is beaten":
-    (ties > 4) ? "Tied Game, Friendship wins!":
-    (computerScore > 4) ? "You lost, Computer beat you":
-    `${playerScore} ${ties} ${computerScore}`;
+    // Update the score on the page
+    var scorePara = document.querySelector(".pscore");
+    scorePara.textContent =
+        playerScore > 4
+            ? "You won! Computer is beaten"
+            : ties > 4
+                ? "Tied Game, Friendship wins!"
+                : computerScore > 4
+                    ? "You lost, Computer beat you"
+                    : "".concat(playerScore, " ").concat(ties, " ").concat(computerScore);
 }
-
-// Saving all buttons in a variable
-const choices = document.querySelectorAll("button");
-
-/* Iterating through the node list of buttons
-and calling a startGame funcion for each one, if
-button is clicked */
-
-choices.forEach(choice => {
-    choice.addEventListener('click', startGame);
+// Attach event listeners to the buttons
+var choices = document.querySelectorAll("button");
+choices.forEach(function (choice) {
+    choice.addEventListener("click", startGame);
 });
-
-/* Getting the class of chosen button and passing it
-to the game function, which simulates one round of 
-Rock-Paper-Scissors game */
-
+// Function that starts the game round when a button is clicked
 function startGame(e) {
-    const chosenOption = e.target;
-    const optionClass = chosenOption.classList[0];
+    var chosenOption = e.target;
+    var optionClass = chosenOption.classList[0];
     game(optionClass);
 }
-
